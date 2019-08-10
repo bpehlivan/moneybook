@@ -14,5 +14,5 @@ class Deptor(models.Model):
     last_name = models.CharField(max_length=64)
     email = models.EmailField()
     iban = models.CharField(max_length=34)
-    responsible_admin = models.ForeignKey(user_model,
+    responsible_admin = models.ForeignKey(user_model, db_index=True,
                                           on_delete=models.DO_NOTHING)
