@@ -1,7 +1,7 @@
 """moneybook URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+    https://docs.djandebtorsct.com/en/2.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -19,6 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.users.urls')),
+    path('', include('apps.users.urls', 'users')),
+    path('deptors', include(('apps.deptors.urls', 'deptors'),
+                            namespace='debtors')),
     path('auth/', include('social_django.urls', namespace='social'))
 ]
