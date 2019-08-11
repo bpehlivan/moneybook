@@ -90,12 +90,18 @@ DATABASES = {
     }
 }
 
+# google login
+# https://fosstack.com/how-to-add-google-authentication-in-django/
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend'
 ]
 
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/home/'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -134,6 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# google client ID & secret key
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<client_id>'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<client_secret>'
 
 
 try:
