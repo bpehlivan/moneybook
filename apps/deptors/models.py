@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from apps.invoices.models import InvoiceStatusChoices
 
 user_model = get_user_model()
 
@@ -16,3 +17,21 @@ class Deptor(models.Model):
     iban = models.CharField(max_length=34)
     responsible_admin = models.ForeignKey(user_model, db_index=True,
                                           on_delete=models.DO_NOTHING)
+
+    @property
+    def open_invoice_count(self):
+        return self.invoice_set.filter(status=InvoiceStatusChoices.OPEN).count()
+
+    @property
+    def paid_invoice_count(self):
+        return self.invoice_set.filter(status=InvoiceStatusChoices.PAID).count()
+
+    @property
+    def overdue_invoice_count(self):
+        return self.invoice_set.filter(
+            status=InvoiceStatusChoices.OVERDUE).count()
+
+    @property
+    def cancelled_invoice_count(self):
+        return self.invoice_set.filter(
+            status=InvoiceStatusChoices.CANCELLED).count()
