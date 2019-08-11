@@ -2,16 +2,23 @@
 
 {% block content %}
     <div class="row justify-content-center card-row">
-    <div class="card" style="width: 18rem;">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="#">Debtors</a></li>
-            <li class="list-group-item"><a href="#">Invoices</a></li>
-            <li class="list-group-item"><a href="#">Api</a></li>
-        </ul>
+    <div class="list-group" style="width: 18rem;">
+            <a href="#" class="list-group-item list-group-item-action">Debtors</a>
+            <a href="#" class="list-group-item list-group-item-action">Invoices</a>
+            <a href="#" class="list-group-item list-group-item-action">Api</a>
     </div>
     <style type="text/css">
         .card-row {
             margin-top: 10em;
+        }
+        .list-group-item {
+            color: #262626;
+            background-color: #e8dedf;
+            text-align: center;
+        }
+        .list-group-item:hover {
+            color: #262626;
+            background-color: #f1aa76;
         }
     </style>
 
