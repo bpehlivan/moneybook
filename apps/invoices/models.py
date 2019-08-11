@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class StatusChoices:
+class InvoiceStatusChoices:
     OPEN = "OPEN"
     PAID = "PAID"
     OVERDUE = "OVERDUE"
@@ -20,8 +20,8 @@ class StatusChoices:
 class Invoice(models.Model):
     amount = models.DecimalField(max_digits=32, decimal_places=5)
     status = models.CharField(max_length=16, null=False,
-                              choices=StatusChoices.choices_list(),
-                              default=StatusChoices.OPEN)
+                              choices=InvoiceStatusChoices.choices_list(),
+                              default=InvoiceStatusChoices.OPEN)
     due_date = models.DateField()
     deptor = models.ForeignKey('deptors.Deptor', on_delete=models.CASCADE,
                                db_index=True)
