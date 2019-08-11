@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth import authenticate, login
 
 
 class LoginView(View):
@@ -7,7 +8,15 @@ class LoginView(View):
         return render(request, 'login/login.html')
 
     def post(self, request):
-        return redirect('home')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user=user)
+            return redirect('home')
+        else:
+            return render(request, 'login/login.html',
+                          {'is_authentication_failed': True})
 
 
 class HomeView(View):
