@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class LoginView(View):
@@ -19,6 +20,6 @@ class LoginView(View):
                           {'is_authentication_failed': True})
 
 
-class HomeView(View):
+class HomeView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'home/home.html')
