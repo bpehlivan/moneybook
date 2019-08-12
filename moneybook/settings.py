@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'social_django',
-    'apps.deptors',
+    'apps.debtors',
     'apps.invoices',
     'apps.users',
 ]

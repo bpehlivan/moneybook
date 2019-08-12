@@ -6,7 +6,7 @@ from apps.invoices.models import InvoiceStatusChoices
 user_model = get_user_model()
 
 
-class Deptor(models.Model):
+class Debtor(models.Model):
     """
     According to online information(google), maximum length
     of an IBAN is 34 characters

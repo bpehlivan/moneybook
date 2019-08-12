@@ -23,5 +23,5 @@ class Invoice(models.Model):
                               choices=InvoiceStatusChoices.choices_list(),
                               default=InvoiceStatusChoices.OPEN)
     due_date = models.DateField()
-    deptor = models.ForeignKey('deptors.Deptor', on_delete=models.CASCADE,
+    debtor = models.ForeignKey('debtors.Debtor', on_delete=models.CASCADE,
                                db_index=True)

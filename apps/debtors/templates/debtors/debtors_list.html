@@ -12,10 +12,10 @@
                 <table id="table1" class="display"></table>
                 <hr class="my-4">
                 <div class="row justify-content-center">
-                    <a href="{% url 'debtors:deptors-create' %}"
+                    <a href="{% url 'debtors:debtors-create' %}"
                        class="btn btn-success">
                         Add
-                        Deptor
+                        Debtor
                     </a>
                 </div>
             </div>
@@ -37,18 +37,18 @@
 
     <script>
         var dataSet = [
-            {% if not deptors %}
+            {% if not debtors %}
                 ["-", "-", "-", "-", "-", "-", "-",],
             {% else %}
-                {% for deptor in deptors %}
+                {% for debtor in debtors %}
                     [
-                        "{{ deptor.first_name }}",
-                        "{{ deptor.last_name }}",
-                        "{{ deptor.email }}",
-                        "{{ deptor.open_invoice_count }}",
-                        "{{ deptor.paid_invoice_count }}",
-                        "{{ deptor.overdue_invoice_count }}",
-                        "{{ deptor.cancelled_invoice_count }}",
+                        "{{ debtor.first_name }}",
+                        "{{ debtor.last_name }}",
+                        "{{ debtor.email }}",
+                        "{{ debtor.open_invoice_count }}",
+                        "{{ debtor.paid_invoice_count }}",
+                        "{{ debtor.overdue_invoice_count }}",
+                        "{{ debtor.cancelled_invoice_count }}",
                     ],
                 {% endfor %}
             {% endif %}
@@ -66,11 +66,11 @@
                     {title: "Cancelled Invoice Count"}]
             });
         });
-        {% if is_deptor_created %}
-            alert("New deptor record succesfully created.");
+        {% if is_debtor_created %}
+            alert("New debtor record succesfully created.");
         {% endif %}
         {% if is_debtor_creation_failed %}
-            alert("New deptor record creation failed!");
+            alert("New debtor record creation failed!");
         {% endif %}
     </script>
 {% endblock %}
