@@ -1,6 +1,6 @@
 import logging
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -48,3 +48,13 @@ class CreateDebtorView(LoginRequiredMixin, View):
             logger.exception(exc)
             return DeptorView.render_deptor_page(
                 request=request, is_debtor_creation_failed=True)
+
+
+class DebtorDetailView(LoginRequiredMixin, View):
+    def get(self, request, deptor_id):
+        try:
+            debtor_instance = Deptor.objects.get(pk=deptor_id)
+            # TODO: refactor after template created
+            return render(request, '')
+        except Deptor.DoesNotExist:
+            return redirect('debtors-list')
