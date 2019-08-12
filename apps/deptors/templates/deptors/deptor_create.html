@@ -1,0 +1,49 @@
+{% extends 'base/base-logged.html' %}
+{% block content %}
+    <div class="row justify-content-center" id="form-row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h4 class="display-5">Add Deptor</h4>
+                <hr class="my-4">
+                <form method="post">{% csrf_token %}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" class="form-control"
+                                       name="first_name"
+                                       placeholder="First Name"
+                                       required="required">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control"
+                                       name="last_name"
+                                       placeholder="Last Name"
+                                       required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="e-mail"
+                               placeholder="E-Mail" required="required">
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" name="iban"
+                               placeholder="Iban" required="required">
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Save Deptor
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block style-script %}
+    <style type="text/css">
+        #form-row {
+            margin-top: 5em;
+        }
+    </style>
+{% endblock %}
