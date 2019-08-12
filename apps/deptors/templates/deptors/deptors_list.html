@@ -6,7 +6,6 @@
             src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 {% endblock %}
 {% block content %}
-    <!---->
     <div class="row justify-content-center" id="table-row">
         <div class="col-md-8">
             <div class="jumbotron">
@@ -22,58 +21,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="AddDebtorModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form method="post">{% csrf_token %}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add
-                            Deptor</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control" name="first_name"
-                                       placeholder="First name">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" name="last_name"
-                                       placeholder="Last name">
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 1em">
-                            <div class="col">
-                                <input class="form-control" type="email" name="e-mail"
-                                       placeholder="E-mail">
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 1em">
-                            <div class="col">
-                                <input class="form-control" type="text" name="iban"
-                                       placeholder="Iban">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                                data-dismiss="modal">Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Save Debtor
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block style-script %}
@@ -82,6 +29,7 @@
             margin-top: 5em;
         }
 
+        /* resizes table */
         .dataTables_wrapper {
             font-size: 13px;
         }
@@ -118,5 +66,11 @@
                     {title: "Cancelled Invoice Count"}]
             });
         });
+        {% if is_deptor_created %}
+            alert("New deptor record succesfully created.");
+        {% endif %}
+        {% if is_debtor_creation_failed %}
+            alert("New deptor record creation failed!");
+        {% endif %}
     </script>
 {% endblock %}
