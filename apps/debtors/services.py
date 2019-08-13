@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
+from django.db.transaction import atomic
 
 from apps.debtors.models import Debtor
+from apps.invoices.services import InvoiceService
 
 
 class DebtorService:
@@ -22,4 +24,11 @@ class DebtorService:
         return instance
 
     def delete_debtor(self, instance: Debtor):
-        raise NotImplementedError()
+        qs__invoices = instance.invoice_set.only('pk').all()
+        invoice_service = InvoiceService()
+
+        with atomic():
+            for invoice in qs__invoices:
+                invoice_service.delete_invoice(instance=invoice)
+
+            instance.delete()
