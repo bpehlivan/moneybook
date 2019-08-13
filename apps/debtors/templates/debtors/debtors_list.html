@@ -38,7 +38,7 @@
     <script>
         var dataSet = [
             {% if not debtors %}
-                ["-", "-", "-", "-", "-", "-", "-", "-", ],
+                ["-", "-", "-", "-", "-", "-", "-", "-",],
             {% else %}
                 {% for debtor in debtors %}
                     [
@@ -69,11 +69,12 @@
                 ]
             });
         });
-        {% if is_debtor_created %}
-            alert("New debtor record succesfully created.");
-        {% endif %}
-        {% if is_debtor_creation_failed %}
-            alert("New debtor record creation failed!");
+        {% if send_notification %}
+            {% if is_operation_succeeded %}
+                alert("Operation succeeded!");
+            {% else %}
+                alert("Operation failed!");
+            {% endif %}
         {% endif %}
     </script>
 {% endblock %}
