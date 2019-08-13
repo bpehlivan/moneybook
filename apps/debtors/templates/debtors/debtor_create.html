@@ -31,9 +31,14 @@
                         <input type="text" class="form-control" name="iban"
                                placeholder="Iban" required="required">
                     </div>
-
-                    <button type="submit" class="btn btn-success">Save Debtor
-                    </button>
+                    <a href="{% url 'debtors:debtors-list' %}" class="btn btn-secondary">
+                        back
+                    </a>
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-success">
+                            Save Debtor
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
