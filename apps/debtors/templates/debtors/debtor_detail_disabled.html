@@ -8,14 +8,16 @@
                 <hr class="my-4">
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">First Name</label>
                                 <input type="text" class="form-control"
-                                       name="first_name"
+                                       name="first_name" id="firstName"
                                        value="{{ debtor.first_name }}" readonly>
                             </div>
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control"
-                                       name="last_name"
+                                       name="last_name" id="lastName"
                                        value="{{ debtor.last_name }}"
                                        placeholder="Last Name"
                                        required="required" readonly>
@@ -23,13 +25,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="email">E-Mail</label>
                         <input type="email" class="form-control" name="email"
-                               value="{{ debtor.email }}" readonly>
+                               value="{{ debtor.email }}" id="email" readonly>
                     </div>
                     <div class="form-group">
-
+                        <label for="iban">Iban</label>
                         <input type="text" class="form-control" name="iban"
-                               value="{{ debtor.iban }}" readonly>
+                               value="{{ debtor.iban }}" id="iban" readonly>
                     </div>
                     <a href="{% url 'debtors:debtors-list' %}"
                        class="btn btn-secondary">back

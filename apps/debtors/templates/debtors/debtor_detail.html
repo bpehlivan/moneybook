@@ -9,31 +9,36 @@
                 <form method="post">{% csrf_token %}
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">First Name</label>
                                 <input type="text" class="form-control"
                                        name="first_name"
                                        value="{{ debtor.first_name }}"
                                        placeholder="First Name"
-                                       required="required">
+                                       required="required" id="firstName">
+
                             </div>
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control"
                                        name="last_name"
                                        value="{{ debtor.last_name }}"
                                        placeholder="Last Name"
-                                       required="required">
+                                       required="required" id="lastName">
+
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="email">E-Mail</label>
                         <input type="email" class="form-control" name="email"
-                               value="{{ debtor.email }}"
+                               value="{{ debtor.email }}" id="email"
                                placeholder="E-Mail" required="required">
                     </div>
                     <div class="form-group">
-
+                        <label for="iban">Iban</label>
                         <input type="text" class="form-control" name="iban"
-                               value="{{ debtor.iban }}"
+                               value="{{ debtor.iban }}" id="iban"
                                placeholder="Iban" required="required">
                     </div>
                     <a href="{% url 'debtors:debtors-list' %}"

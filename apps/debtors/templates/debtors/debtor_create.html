@@ -8,28 +8,31 @@
                 <form method="post">{% csrf_token %}
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">First Name</label>
                                 <input type="text" class="form-control"
-                                       name="first_name"
+                                       name="first_name" id="firstName"
                                        placeholder="First Name"
                                        required="required">
                             </div>
-                            <div class="col">
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control"
-                                       name="last_name"
+                                       name="last_name" id="lastName"
                                        placeholder="Last Name"
                                        required="required">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="email">E-Mail</label>
                         <input type="email" class="form-control" name="email"
-                               placeholder="E-Mail" required="required">
+                               placeholder="E-Mail" id="email" required="required">
                     </div>
                     <div class="form-group">
-
+                        <label for="iban">Iban</label>
                         <input type="text" class="form-control" name="iban"
-                               placeholder="Iban" required="required">
+                               placeholder="Iban" id="iban" required="required">
                     </div>
                     <a href="{% url 'debtors:debtors-list' %}" class="btn btn-secondary">
                         back
