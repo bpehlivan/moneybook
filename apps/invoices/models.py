@@ -25,3 +25,7 @@ class Invoice(models.Model):
     due_date = models.DateField()
     debtor = models.ForeignKey('debtors.Debtor', on_delete=models.CASCADE,
                                db_index=True)
+
+    @property
+    def debtor_name(self):
+        return "{} {}".format(self.debtor.first_name, self.debtor.last_name)

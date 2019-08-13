@@ -21,7 +21,7 @@
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-sm navbar-fixed-top navbar-custom">
-    <a class="navbar-brand custom-brand" href="/"><b>MoneyBook</b></a>
+    <a class="navbar-brand custom-brand" href="{% url 'users:home' %}"><b>MoneyBook</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarNav" aria-controls="navbarNav"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
                 <a class="nav-link" href="{% url 'debtors:debtors-list' %}">Debtors</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Invoices</a>
+                <a class="nav-link" href="{% url 'debtors:invoices:invoices-list' %}">Invoices</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Api</a>

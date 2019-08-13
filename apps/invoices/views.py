@@ -21,8 +21,7 @@ class InvoiceView(LoginRequiredMixin, View):
             'invoices': qs__invoices,
         }
 
-        # TODO: add template path when ready
-        return render(request, '', template_data)
+        return render(request, 'invoices/invoices_list.html', template_data)
 
     def get(self, request):
         return self.render_invoice_page(request=request)
