@@ -16,6 +16,7 @@
                 <table id="table1" class="display"></table>
                 <hr class="my-4">
                 {% if debtor %}
+                    {% if debtor.responsible_admin == request.user %}
                 <div class="row justify-content-center">
                     <a href=""
                        class="btn btn-success">
@@ -23,6 +24,7 @@
                         Invoice
                     </a>
                 </div>
+                        {% endif %}
                 {% endif %}
             </div>
         </div>

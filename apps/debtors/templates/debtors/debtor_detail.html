@@ -44,8 +44,9 @@
                     <a href="{% url 'debtors:debtors-list' %}"
                        class="btn btn-secondary">back
                     </a>
-                    <button type="button" class="btn btn-warning">Invoices
-                    </button>
+                    <a class="btn btn-warning" href="{% url 'debtors:invoices:invoice-debtor-list' debtor_id=debtor.pk %}">
+                        Invoices
+                    </a>
 
                     <button type="button" data-toggle="modal"
                             data-target="#cancelModal"

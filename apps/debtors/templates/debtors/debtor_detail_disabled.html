@@ -37,6 +37,9 @@
                     <a href="{% url 'debtors:debtors-list' %}"
                        class="btn btn-secondary">back
                     </a>
+                    <a class="btn btn-warning" href="{% url 'debtors:invoices:invoice-debtor-list' debtor_id=debtor.pk %}">
+                        Invoices
+                    </a>
             </div>
         </div>
     </div>
