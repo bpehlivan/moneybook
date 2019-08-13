@@ -33,7 +33,7 @@ class CreateDebtorView(LoginRequiredMixin, View):
     def post(self, request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        e_mail = request.POST.get('e-mail')
+        e_mail = request.POST.get('email')
         iban = request.POST.get('iban')
 
         debtor_service = DebtorService()
@@ -54,8 +54,25 @@ class DebtorDetailView(LoginRequiredMixin, View):
     def get(self, request, debtor_id):
         try:
             debtor_instance = Debtor.objects.get(pk=debtor_id)
-            # TODO: refactor after template created
             return render(request, 'debtors/debtor_detail.html',
                           {'debtor': debtor_instance})
+        except Debtor.DoesNotExist:
+            return redirect('debtors:debtors-list')
+
+    def post(self, request, debtor_id):
+        try:
+            debtor_instance = Debtor.objects.get(pk=debtor_id)
+            debtor_service = DebtorService()
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            iban = request.POST.get('iban')
+
+            updated_instance = debtor_service.update_debtor(
+                instance=debtor_instance, first_name=first_name,
+                last_name=last_name, email=email, iban=iban)
+
+            return render(request, 'debtors/debtor_detail.html',
+                          {'debtor': updated_instance})
         except Debtor.DoesNotExist:
             return redirect('debtors-list')

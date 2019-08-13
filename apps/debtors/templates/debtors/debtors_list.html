@@ -38,7 +38,7 @@
     <script>
         var dataSet = [
             {% if not debtors %}
-                ["-", "-", "-", "-", "-", "-", "-",],
+                ["-", "-", "-", "-", "-", "-", "-", "-", ],
             {% else %}
                 {% for debtor in debtors %}
                     [
@@ -49,6 +49,7 @@
                         "{{ debtor.paid_invoice_count }}",
                         "{{ debtor.overdue_invoice_count }}",
                         "{{ debtor.cancelled_invoice_count }}",
+                        "<a class=\"btn btn-secondary btn-sm\" href=\"{% url 'debtors:debtors-detail' debtor_id=debtor.pk %}\">details</a>",
                     ],
                 {% endfor %}
             {% endif %}
@@ -63,7 +64,9 @@
                     {title: "Open Invoice Count"},
                     {title: "Paid Invoice Count"},
                     {title: "Overdue Invoice Count"},
-                    {title: "Cancelled Invoice Count"}]
+                    {title: "Cancelled Invoice Count"},
+                    {title: "Details"}
+                ]
             });
         });
         {% if is_debtor_created %}
