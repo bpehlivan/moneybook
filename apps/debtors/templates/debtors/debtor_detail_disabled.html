@@ -1,0 +1,47 @@
+{% extends 'base/base-logged.html' %}
+{% block content %}
+    <div class="row justify-content-center" id="form-row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h6 class="display-5">Responsible
+                    Admin: {{ debtor.responsible_admin.username }}</h6>
+                <hr class="my-4">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="text" class="form-control"
+                                       name="first_name"
+                                       value="{{ debtor.first_name }}" readonly>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control"
+                                       name="last_name"
+                                       value="{{ debtor.last_name }}"
+                                       placeholder="Last Name"
+                                       required="required" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email"
+                               value="{{ debtor.email }}" readonly>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" name="iban"
+                               value="{{ debtor.iban }}" readonly>
+                    </div>
+                    <a href="{% url 'debtors:debtors-list' %}"
+                       class="btn btn-secondary">back
+                    </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block style-script %}
+    <style type="text/css">
+        #form-row {
+            margin-top: 5em;
+        }
+    </style>
+{% endblock %}
