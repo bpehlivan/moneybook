@@ -18,7 +18,7 @@
                 {% if debtor %}
                     {% if debtor.responsible_admin == request.user %}
                 <div class="row justify-content-center">
-                    <a href=""
+                    <a href="{% url 'debtors:invoices:invoice-create' debtor_id=debtor.pk %}"
                        class="btn btn-success">
                         Add
                         Invoice
@@ -61,15 +61,15 @@
 
     <script>
         var dataSet = [
-            {% if not debtors %}
+            {% if not invoices %}
                 ["-", "-", "-", "-", "-",],
             {% else %}
                 {% for invoice in invoices %}
                     [
-                        "{{ invoice.debtor_name }}",
+                        "<a href=\"{% url 'debtors:debtors-detail' debtor_id=invoice.debtor.pk %}\" >{{ invoice.debtor_name }}</a>",
                         "{{ invoice.amount }}",
                         "{{ invoice.status }}",
-                        "{{ invoice.due_date }}",
+                        "{{ invoice.due_date_formatted }}",
                         {% if invoice.debtor.responsible_admin == request.user %}
                             "<a class=\"btn btn-info btn-sm\" href=\"\">details</a>",
                         {% else %}

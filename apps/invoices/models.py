@@ -29,3 +29,7 @@ class Invoice(models.Model):
     @property
     def debtor_name(self):
         return "{} {}".format(self.debtor.first_name, self.debtor.last_name)
+
+    @property
+    def due_date_formatted(self):
+        return self.due_date.strftime('%Y-%m-%d')

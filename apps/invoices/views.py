@@ -1,5 +1,5 @@
 import logging
-from datetime import date
+from datetime import date, datetime
 
 from django.shortcuts import render, redirect
 from django.views import View
@@ -54,17 +54,13 @@ class InvoiceView(LoginRequiredMixin, View):
 class CreateInvoiceView(LoginRequiredMixin, View):
     def get(self, request, debtor_id):
         try:
-            debtor = Debtor.objects.get(pk=debtor_id)
+            debtor = Debtor.objects.get(
+                pk=debtor_id, responsible_admin=request.user)
         except Debtor.DoesNotExist:
-            # TODO: add url names
-            return redirect('')
+            return redirect('users:home')
 
-        if debtor.responsible_admin == request.user:
-            # TODO: return functional invoice detail page
-            return render(request, '', {'debtor': debtor})
-
-        # TODO: add disabled template path when ready
-        return render(request, '', {'debtor': debtor})
+        return render(request, 'invoices/invoice_create.html',
+                      {'debtor': debtor})
 
     def post(self, request, debtor_id):
         try:
@@ -77,15 +73,22 @@ class CreateInvoiceView(LoginRequiredMixin, View):
         amount = request.POST.get('amount')
         status = request.POST.get('status')
         due_date_str = request.POST.get('due_date')
-        # TODO: convert due_date_str to date object
-        due_date = date(1, 1, 1970)
 
-        invoice_service = InvoiceService()
-        invoice_service.create_invoice(amount=amount, status=status,
-                                       due_date=due_date, debtor=debtor)
+        try:
+            due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date()
 
-        # TODO: notification parameters
-        return InvoiceView.render_invoice_page(request)
+            invoice_service = InvoiceService()
+            invoice_service.create_invoice(amount=amount, status=status,
+                                           due_date=due_date, debtor=debtor)
+        except Exception as exc:
+            logging.exception(exc)
+            return InvoiceView.render_invoice_page_for_debtor(
+                request=request, debtor=debtor, send_notification=True,
+                is_operation_succeeded=False)
+
+        return InvoiceView.render_invoice_page_for_debtor(
+            request, debtor=debtor, send_notification=True,
+            is_operation_succeeded=True)
 
 
 class InvoiceDetailView(LoginRequiredMixin, View):
