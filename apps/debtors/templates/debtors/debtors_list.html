@@ -21,6 +21,22 @@
             </div>
         </div>
     </div>
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notification-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="notification-modal-message">Operation succeeded!</p>
+                </div>
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">Close
+                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block style-script %}
@@ -69,12 +85,16 @@
                 ]
             });
         });
-        {% if send_notification %}
-            {% if is_operation_succeeded %}
-                alert("Operation succeeded!");
-            {% else %}
-                alert("Operation failed!");
+        $('#modal-success').modal('show');
+        $(document).ready(function () {
+            {% if send_notification %}
+                {% if is_operation_succeeded %}
+                    $("#notification-modal").modal('show');
+                {% else %}
+                    $("#notification-modal-message")[0].innerText = "Operation failed!";
+                    $("#notification-modal").modal('show');
+                {% endif %}
             {% endif %}
-        {% endif %}
+        });
     </script>
 {% endblock %}
