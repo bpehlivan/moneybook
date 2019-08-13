@@ -1,0 +1,100 @@
+{% extends 'base/base-logged.html' %}
+{% block head %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="row justify-content-center" id="table-row">
+        <div class="col-md-8">
+            <div class="jumbotron">
+                <h3>Invoices</h3>
+                <hr class="my-4">
+                <table id="table1" class="display"></table>
+                <hr class="my-4">
+                <div class="row justify-content-center">
+                    <a href=""
+                       class="btn btn-success">
+                        Add
+                        Invoice
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notification-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p id="notification-modal-message">Operation succeeded!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block style-script %}
+    <style type="text/css">
+        #table-row {
+            margin-top: 5em;
+        }
+
+        /* resizes table */
+        .dataTables_wrapper {
+            font-size: 13px;
+        }
+    </style>
+
+    <script>
+        var dataSet = [
+            {% if not debtors %}
+                ["-", "-", "-", "-", "-",],
+            {% else %}
+                {% for invoice in invoices %}
+                    [
+                        "{{ invoice.debtor_name }}",
+                        "{{ invoice.amount }}",
+                        "{{ invoice.status }}",
+                        "{{ invoice.due_date }}",
+                        {% if invoice.debtor.responsible_admin == request.user %}
+                            "<a class=\"btn btn-info btn-sm\" href=\"\">details</a>",
+                        {% else %}
+                            "<a class=\"btn btn-secondary btn-sm\" href=\"\">details</a>",
+                        {% endif %}
+                    ],
+                {% endfor %}
+            {% endif %}
+        ];
+        $(document).ready(function () {
+            $('#table1').DataTable({
+                data: dataSet,
+                columns: [
+                    {title: "Debtor Name"},
+                    {title: "Amount"},
+                    {title: "Status"},
+                    {title: "Due Date"},
+                    {title: "Details"},
+                ]
+            });
+        });
+        $('#modal-success').modal('show');
+        $(document).ready(function () {
+            {% if send_notification %}
+                {% if is_operation_succeeded %}
+                    $("#notification-modal").modal('show');
+                {% else %}
+                    $("#notification-modal-message")[0].innerText = "Operation failed!";
+                    $("#notification-modal").modal('show');
+                {% endif %}
+            {% endif %}
+        });
+    </script>
+{% endblock %}
