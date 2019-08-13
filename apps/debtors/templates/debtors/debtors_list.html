@@ -30,9 +30,9 @@
                     <p id="notification-modal-message">Operation succeeded!</p>
                 </div>
                 <div class="modal-footer">
-                        <button type="button" class="btn btn-primary"
-                                data-dismiss="modal">Close
-                        </button>
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -65,7 +65,11 @@
                         "{{ debtor.paid_invoice_count }}",
                         "{{ debtor.overdue_invoice_count }}",
                         "{{ debtor.cancelled_invoice_count }}",
-                        "<a class=\"btn btn-secondary btn-sm\" href=\"{% url 'debtors:debtors-detail' debtor_id=debtor.pk %}\">details</a>",
+                        {% if debtor.responsible_admin == request.user %}
+                            "<a class=\"btn btn-info btn-sm\" href=\"{% url 'debtors:debtors-detail' debtor_id=debtor.pk %}\">details</a>",
+                        {% else %}
+                            "<a class=\"btn btn-secondary btn-sm\" href=\"{% url 'debtors:debtors-detail' debtor_id=debtor.pk %}\">details</a>",
+                        {% endif %}
                     ],
                 {% endfor %}
             {% endif %}

@@ -14,7 +14,7 @@ class DebtorView(LoginRequiredMixin, View):
     @staticmethod
     def render_debtor_page(request, send_notification=False,
                            is_operation_succeeded=False):
-        debtors__qs = Debtor.objects.filter(responsible_admin=request.user)
+        debtors__qs = Debtor.objects.all()
         template_data = {
             'debtors': debtors__qs,
             'is_operation_succeeded': is_operation_succeeded,
@@ -57,8 +57,13 @@ class DebtorDetailView(LoginRequiredMixin, View):
     def get(self, request, debtor_id):
         try:
             debtor_instance = Debtor.objects.get(pk=debtor_id)
-            return render(request, 'debtors/debtor_detail.html',
+            if debtor_instance.responsible_admin == request.user:
+                return render(request, 'debtors/debtor_detail.html',
+                              {'debtor': debtor_instance})
+
+            return render(request, 'debtors/debtor_detail_disabled.html',
                           {'debtor': debtor_instance})
+
         except Debtor.DoesNotExist:
             return redirect('debtors:debtors-list')
 
