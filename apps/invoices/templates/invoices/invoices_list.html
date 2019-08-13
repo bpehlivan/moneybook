@@ -9,10 +9,13 @@
     <div class="row justify-content-center" id="table-row">
         <div class="col-md-8">
             <div class="jumbotron">
-                <h3>Invoices</h3>
+                {% if debtor %}
+                    <h3>Invoices Of debtor: {{ debtor.full_name }}</h3>
+                {% else %}<h3>Invoices</h3>{% endif %}
                 <hr class="my-4">
                 <table id="table1" class="display"></table>
                 <hr class="my-4">
+                {% if debtor %}
                 <div class="row justify-content-center">
                     <a href=""
                        class="btn btn-success">
@@ -20,6 +23,7 @@
                         Invoice
                     </a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

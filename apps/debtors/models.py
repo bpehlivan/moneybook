@@ -35,3 +35,8 @@ class Debtor(models.Model):
     def cancelled_invoice_count(self):
         return self.invoice_set.filter(
             status=InvoiceStatusChoices.CANCELLED).count()
+
+    @property
+    def full_name(self):
+        return "{first_name} {last_name}".format(first_name=self.first_name,
+                                                 last_name=self.last_name)
