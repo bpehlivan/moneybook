@@ -64,7 +64,8 @@ class DebtorDetailView(LoginRequiredMixin, View):
 
     def post(self, request, debtor_id):
         try:
-            debtor_instance = Debtor.objects.get(pk=debtor_id)
+            debtor_instance = Debtor.objects.get(pk=debtor_id,
+                                                 responsible_admin=request.user)
         except Debtor.DoesNotExist:
             return redirect('debtors-list')
 
@@ -79,6 +80,28 @@ class DebtorDetailView(LoginRequiredMixin, View):
                 instance=debtor_instance, first_name=first_name,
                 last_name=last_name, email=email, iban=iban)
 
+            return DebtorView.render_debtor_page(
+                request=request, send_notification=True,
+                is_operation_succeeded=True)
+
+        except Exception as exc:
+            logger.exception(exc)
+            return DebtorView.render_debtor_page(
+                request=request, send_notification=True,
+                is_operation_succeeded=False)
+
+
+class DeleteDebtorView(View):
+    def post(self, request, debtor_id):
+        try:
+            debtor_instance = Debtor.objects.get(pk=debtor_id,
+                                                 responsible_admin=request.user)
+        except Debtor.DoesNotExist:
+            return redirect('debtors-list')
+
+        try:
+            debtor_service = DebtorService()
+            debtor_service.delete_debtor(instance=debtor_instance)
             return DebtorView.render_debtor_page(
                 request=request, send_notification=True,
                 is_operation_succeeded=True)
