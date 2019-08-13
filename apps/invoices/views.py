@@ -14,16 +14,40 @@ logger = logging.getLogger(__name__)
 
 class InvoiceView(LoginRequiredMixin, View):
     @staticmethod
-    def render_invoice_page(request):
+    def render_invoice_page(request, send_notification: bool = False,
+                            is_operation_succeeded: bool = False):
 
         qs__invoices = Invoice.objects.all()
         template_data = {
             'invoices': qs__invoices,
+            'send_notification': send_notification,
+            'is_operation_succeeded': is_operation_succeeded,
         }
 
         return render(request, 'invoices/invoices_list.html', template_data)
 
-    def get(self, request):
+    @staticmethod
+    def render_invoice_page_for_debtor(request, debtor: Debtor,
+                                       send_notification: bool = False,
+                                       is_operation_succeeded: bool = False):
+        qs__invoices = Invoice.objects.filter(debtor=debtor)
+        template_data = {
+            'debtor': debtor,
+            'invoices': qs__invoices,
+            'send_notification': send_notification,
+            'is_operation_succeeded': is_operation_succeeded,
+        }
+
+        return render(request, 'invoices/invoices_list.html', template_data)
+
+    def get(self, request, debtor_id=None):
+        if debtor_id:
+            try:
+                debtor = Debtor.objects.get(pk=debtor_id)
+            except Debtor.DoesNotExist:
+                return redirect('users:home')
+            return self.render_invoice_page_for_debtor(request=request,
+                                                       debtor=debtor)
         return self.render_invoice_page(request=request)
 
 

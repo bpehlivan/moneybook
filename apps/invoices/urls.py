@@ -6,4 +6,6 @@ app_name = 'invoices'
 
 urlpatterns = [
     path('invoices/', InvoiceView.as_view(), name='invoices-list'),
+    path('<int:debtor_id>/invoices/', InvoiceView.as_view(),
+         name='invoice-debtor-list'),
 ]
