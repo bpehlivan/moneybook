@@ -42,30 +42,30 @@ class CreateDebtorView(LoginRequiredMixin, View):
                 first_name=first_name, last_name=last_name,
                 e_mail=e_mail, iban=iban, respobsible_admin=request.user)
 
-            return DebtorView.render_debtor_page(
-                request=request, send_notification=True,
-                is_operation_succeeded=True)
-
         except Exception as exc:
             logger.exception(exc)
             return DebtorView.render_debtor_page(
                 request=request, send_notification=True,
                 is_operation_succeeded=False)
 
+        return DebtorView.render_debtor_page(
+            request=request, send_notification=True,
+            is_operation_succeeded=True)
+
 
 class DebtorDetailView(LoginRequiredMixin, View):
     def get(self, request, debtor_id):
         try:
             debtor_instance = Debtor.objects.get(pk=debtor_id)
-            if debtor_instance.responsible_admin == request.user:
-                return render(request, 'debtors/debtor_detail.html',
-                              {'debtor': debtor_instance})
-
-            return render(request, 'debtors/debtor_detail_disabled.html',
-                          {'debtor': debtor_instance})
-
         except Debtor.DoesNotExist:
             return redirect('debtors:debtors-list')
+
+        if debtor_instance.responsible_admin == request.user:
+            return render(request, 'debtors/debtor_detail.html',
+                          {'debtor': debtor_instance})
+
+        return render(request, 'debtors/debtor_detail_disabled.html',
+                      {'debtor': debtor_instance})
 
     def post(self, request, debtor_id):
         try:
@@ -74,26 +74,25 @@ class DebtorDetailView(LoginRequiredMixin, View):
         except Debtor.DoesNotExist:
             return redirect('debtors-list')
 
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        iban = request.POST.get('iban')
+
         try:
             debtor_service = DebtorService()
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            email = request.POST.get('email')
-            iban = request.POST.get('iban')
-
             debtor_service.update_debtor(
                 instance=debtor_instance, first_name=first_name,
                 last_name=last_name, email=email, iban=iban)
-
-            return DebtorView.render_debtor_page(
-                request=request, send_notification=True,
-                is_operation_succeeded=True)
-
         except Exception as exc:
             logger.exception(exc)
             return DebtorView.render_debtor_page(
                 request=request, send_notification=True,
                 is_operation_succeeded=False)
+
+        return DebtorView.render_debtor_page(
+            request=request, send_notification=True,
+            is_operation_succeeded=True)
 
 
 class DeleteDebtorView(View):
@@ -107,12 +106,12 @@ class DeleteDebtorView(View):
         try:
             debtor_service = DebtorService()
             debtor_service.delete_debtor(instance=debtor_instance)
-            return DebtorView.render_debtor_page(
-                request=request, send_notification=True,
-                is_operation_succeeded=True)
-
         except Exception as exc:
             logger.exception(exc)
             return DebtorView.render_debtor_page(
                 request=request, send_notification=True,
                 is_operation_succeeded=False)
+
+        return DebtorView.render_debtor_page(
+            request=request, send_notification=True,
+            is_operation_succeeded=True)
