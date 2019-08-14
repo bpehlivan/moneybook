@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <div class="jumbotron">
                 <h4 class="display-5">Add Invoice For
-                    Debtor: {{ debtor.full_name }}</h4>
+                    Debtor: {{ invoice.debtor.full_name }}</h4>
                 <hr class="my-4">
                 <form method="post">{% csrf_token %}
                     <div class="form-group">
@@ -16,15 +16,15 @@
                             <div class="form-group col-md-6">
                                 <label for="amount">Amount</label>
                                 <input type="number" class="form-control"
-                                       name="amount" id="amount"
+                                       name="amount" id="amount" value="{{ invoice.amount }}"
                                        placeholder="Amount" step="any"
-                                       required="required">
+                                       required="required" disabled>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="status">Status</label>
                                 <select class="form-control" name="status"
-                                        id="status" required="required">
-                                    <option selected>OPEN</option>
+                                        id="status" required="required" disabled>
+                                    <option>OPEN</option>
                                     <option>PAID</option>
                                     <option>OVERDUE</option>
                                     <option>CANCELLED</option>
@@ -34,16 +34,11 @@
                     </div>
                     <div class="form-group">
                             <label for="datetimepicker1">Due Date</label>
-                            <input type='text' id='datetimepicker1' name="due_date" class="form-control"/>
+                            <input type='text' id='datetimepicker1' name="due_date" value="{{ invoice.due_date_formatted }}" class="form-control" disabled/>
                     </div>
-                    <a href="{% url 'debtors:invoices:invoice-debtor-list' debtor_id=debtor.pk %}" class="btn btn-secondary">
+                    <a href="{% url 'debtors:invoices:invoice-debtor-list' debtor_id=invoice.debtor.pk %}" class="btn btn-secondary">
                         back
                     </a>
-                    <div class="float-right">
-                        <button type="submit" class="btn btn-success">
-                            Save Invoice
-                        </button>
-                    </div>
                 </form>
             </div>
         </div>
@@ -61,5 +56,6 @@
             timepicker: false,
             format:'Y-m-d',
         });
+        document.getElementById("status").value = "{{ invoice.status }}";
     </script>
 {% endblock %}

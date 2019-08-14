@@ -67,8 +67,7 @@ class CreateInvoiceView(LoginRequiredMixin, View):
             debtor = Debtor.objects.get(pk=debtor_id,
                                         responsible_admin=request.user)
         except Debtor.DoesNotExist:
-            # TODO: add url names
-            return redirect('')
+            return redirect('debtors:invoices:invoices-list')
 
         amount = request.POST.get('amount')
         status = request.POST.get('status')
@@ -96,30 +95,28 @@ class InvoiceDetailView(LoginRequiredMixin, View):
         try:
             invoice = Invoice.objects.get(pk=invoice_id)
         except Invoice.DoesNotExist:
-            # TODO: add url names
-            return redirect('')
+            return redirect('debtors:invoices:invoices-list')
 
         if invoice.debtor.responsible_admin == request.user:
-            # TODO: detail template
-            return render(request, '', {'invoice': invoice})
+            return render(request, 'invoices/invoice_detail.html',
+                          {'invoice': invoice})
 
-        # TODO: detail template disabled
-        return render(request, '', {'invoice': invoice})
+        return render(request, 'invoices/invoice_detail_disabled.html',
+                      {'invoice': invoice})
 
     def post(self, request, invoice_id):
         try:
             invoice = Invoice.objects.get(
                 pk=invoice_id, debtor__responsible_admin=request.user)
         except Invoice.DoesNotExist:
-            # TODO: add url names
-            return redirect('')
+            return redirect('debtors:invoices:invoices-list')
 
         amount = request.POST.get('amount')
         status = request.POST.get('status')
         due_date_str = request.POST.get('due_date')
 
         try:
-            due_date = date(1, 1, 1970)
+            due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date()
             invoice_service = InvoiceService()
             invoice_service.update_invoice(instance=invoice,
                                            amount=amount, status=status,
@@ -127,11 +124,13 @@ class InvoiceDetailView(LoginRequiredMixin, View):
 
         except Exception as exc:
             logging.exception(exc)
-            # TODO: add notification parameters
-            return InvoiceView.render_invoice_page(request)
+            return InvoiceView.render_invoice_page_for_debtor(
+                request, debtor=invoice.debtor, send_notification=True,
+                is_operation_succeeded=False)
 
-        # TODO: add notification parameters
-        return InvoiceView.render_invoice_page(request)
+        return InvoiceView.render_invoice_page_for_debtor(
+            request=request, debtor=invoice.debtor, send_notification=True,
+            is_operation_succeeded=True)
 
 
 class DeleteInvoiceView(LoginRequiredMixin, View):

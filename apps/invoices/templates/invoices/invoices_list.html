@@ -71,9 +71,9 @@
                         "{{ invoice.status }}",
                         "{{ invoice.due_date_formatted }}",
                         {% if invoice.debtor.responsible_admin == request.user %}
-                            "<a class=\"btn btn-info btn-sm\" href=\"\">details</a>",
+                            "<a class=\"btn btn-info btn-sm\" href=\"{% url 'debtors:invoices:invoices-detail' invoice_id=invoice.pk %}\">details</a>",
                         {% else %}
-                            "<a class=\"btn btn-secondary btn-sm\" href=\"\">details</a>",
+                            "<a class=\"btn btn-secondary btn-sm\" href=\"{% url 'debtors:invoices:invoices-detail' invoice_id=invoice.pk %}\">details</a>",
                         {% endif %}
                     ],
                 {% endfor %}

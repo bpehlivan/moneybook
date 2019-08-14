@@ -18,7 +18,7 @@ class InvoiceStatusChoices:
 
 
 class Invoice(models.Model):
-    amount = models.DecimalField(max_digits=32, decimal_places=5)
+    amount = models.DecimalField(max_digits=32, decimal_places=2)
     status = models.CharField(max_length=16, null=False,
                               choices=InvoiceStatusChoices.choices_list(),
                               default=InvoiceStatusChoices.OPEN)
