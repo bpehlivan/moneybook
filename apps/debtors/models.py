@@ -40,3 +40,6 @@ class Debtor(models.Model):
     def full_name(self):
         return "{first_name} {last_name}".format(first_name=self.first_name,
                                                  last_name=self.last_name)
+
+    class Meta:
+        ordering = ['-pk']
