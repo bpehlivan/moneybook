@@ -17,7 +17,7 @@ until PGPASSWORD=$POSTGRES_PASSWORD psql -h "$host" -p $port -U "postgres" -c '\
 done
 
 >&2 echo "Postgres is up - executing command"
-psql -h $host -p $port -U $user -c "CREATE DATABASE fittrack;" || echo "Database already exists..."
+psql -h $host -p $port -U $user -c "CREATE DATABASE moneybook;" || echo "Database already exists..."
 
 echo "Applying migrations..."
 python manage.py migrate
