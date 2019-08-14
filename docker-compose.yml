@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:alpine
+        volumes:
+            - postgres_moneybook:/tmp/pgdata
+        ports:
+            - "5432:5432"
+    moneybook:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://db:5432"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        restart: on-failure:3
+        env_file:
+            - ./container.env
+        command: ["./entrypoint.sh", "python", "./manage.py", "runserver", "0.0.0.0:8000"]
+        volumes:
+            - .:/usr/src/moneybook
+        ports:
+            - "8000:8000"
+        links:
+            - db
+            - caching
+    pgadmin:
+        image: fenglc/pgadmin4
+        ports:
+            - "5050:5050"
+        volumes:
+            - pgadmin:/root/.pgadmin
+        links:
+            - db
+volumes:
+    postgres_moneybook:
+    pgadmin:
