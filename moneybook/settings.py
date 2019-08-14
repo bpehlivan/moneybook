@@ -101,8 +101,8 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'ORDERING_PARAM': 'sort',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
     'PAGINATE_BY': 10,
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
