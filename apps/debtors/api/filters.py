@@ -17,7 +17,7 @@ class DebtorFilterSet(FilterSet):
             'first_name': ['exact'],
             'last_name': ['exact'],
             'iban': ['exact'],
-            'responsible_admin__pk': ['exact']
+            'responsible_admin': ['exact']
         }
 
     def filter_invoice_count(self, queryset, name, value):
@@ -25,4 +25,4 @@ class DebtorFilterSet(FilterSet):
             invoice_count=value)
 
     def filter_invoice_status(self, queryset, name, value):
-        return queryset.filter(invoice__status=value.upper())
+        return queryset.filter(invoice__status=value.upper()).distinct()
