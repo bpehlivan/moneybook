@@ -1,9 +1,12 @@
-from django_filters.rest_framework import FilterSet, NumberFilter, CharFilter
+from django_filters.rest_framework import FilterSet, CharFilter
 
 from apps.invoices.models import Invoice
 
 
 class InvoiceFilterSet(FilterSet):
+    debtor_mail = CharFilter(field_name='debtor_mail',
+                             method='filter_debtor_mail')
+
     class Meta:
         model = Invoice
 
