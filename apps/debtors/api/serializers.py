@@ -13,7 +13,7 @@ class DebtorSerializer(serializers.ModelSerializer):
         model = Debtor
         fields = ('first_name', 'last_name', 'email', 'iban',
                   'open_invoices', 'paid_invoices', 'overdue_invoices',
-                  'cancelled_invoices', )
+                  'cancelled_invoices', 'pk',)
 
     def get_open_invoices(self, obj: Debtor):
         return obj.open_invoice_count
