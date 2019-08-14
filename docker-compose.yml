@@ -28,7 +28,6 @@ services:
             - "8000:8000"
         links:
             - db
-            - caching
     pgadmin:
         image: fenglc/pgadmin4
         ports:
