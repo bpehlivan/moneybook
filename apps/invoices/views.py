@@ -139,16 +139,17 @@ class DeleteInvoiceView(LoginRequiredMixin, View):
             invoice = Invoice.objects.get(
                 pk=invoice_id, debtor__responsible_admin=request.user)
         except Invoice.DoesNotExist:
-            # TODO: add url names
-            return redirect('')
+            return redirect('debtors:invoices:invoices-list')
 
         try:
             invoice_service = InvoiceService()
             invoice_service.delete_invoice(instance=invoice)
         except Exception as exc:
             logging.exception(exc)
-            # TODO: add notification parameters
-            return InvoiceView.render_invoice_page(request)
+            return InvoiceView.render_invoice_page_for_debtor(
+                request=request, debtor=invoice.debtor,
+                send_notification=True, is_operation_succeeded=False)
 
-        # TODO: add notification parameters
-        return InvoiceView.render_invoice_page(request)
+        return InvoiceView.render_invoice_page_for_debtor(
+            request=request, debtor=invoice.debtor,
+            send_notification=True, is_operation_succeeded=True)
