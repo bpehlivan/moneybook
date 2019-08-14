@@ -1,0 +1,44 @@
+{% extends 'base/base-logged.html' %}
+{% block content %}
+    <div class="row justify-content-center" id="form-row">
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h5 class="display-5"><b>Generate API Key</b></h5>
+                <hr class="my-4">
+                <form method="post">{% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary"
+                                    type="submit">Get Api Key
+                            </button>
+                        </div>
+                        {% if token %}
+                            <input type="text" class="form-control"
+                                   value="{{ token.key }}"
+                                   aria-label="" aria-describedby="basic-addon1"
+                                   readonly>
+                        {% else %}
+                            <input type="text" class="form-control"
+                                   placeholder="Api Key..."
+                                   aria-label="" aria-describedby="basic-addon1"
+                                   readonly>
+                        {% endif %}
+                    </div>
+                </form>
+                <hr class="my-4">
+                <h6><b>Usage:</b></h6>
+                <p>When sending api requests, api token should be provided with
+                    <code>Authorization</code> request header.</p>
+                <br/>
+                <p><code>Authorization: Token &lt;api_key&gt;</code></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block style-script %}
+    <style type="text/css">
+        #form-row {
+            margin-top: 5em;
+        }
+    </style>
+{% endblock %}

@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('apps.users.urls', 'users')),
     path('debtors/', include(('apps.debtors.urls', 'apps.debtors'),
                              namespace='debtors')),
-    path('auth/', include('social_django.urls', namespace='social'))
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('api/', include(('apps.api.urls', 'apps.api'), namespace='api')),
 ]
