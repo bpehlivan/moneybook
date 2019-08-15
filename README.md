@@ -2,9 +2,10 @@
 this is a project for keeping records of debtors and their invoices.
 ## Setting Configurations
 #### Google Login Configuration 
-In order to login the website with google account, authorization key and autharization secret taken from google developer conlose must be set inside the project settings file.
+In order to login the website with google account, authorization key and autharization secret token from google developer console must be set inside the project settings file.
 
 `SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<client_id>'`
+
 `SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<client_secret>'`
 
 To obtain client_id and secret, Go to the [Google Developers Console](https://console.developers.google.com/apis/library?project=_) and 
@@ -19,6 +20,7 @@ Click on Create Credentials then OAuth Client ID. Select the application type We
 Enter the following URI's in Authorized redirect URIs (or domain name instead of localhost)
 
 `http://localhost:8000/auth/complete/google-oauth2/`
+
 `http://127.0.0.1:8000/auth/complete/google-oauth2/`
 
 Now click on library under the APIs and services tab and then search for google+, in the
@@ -106,7 +108,9 @@ You need to send this api key with each request in the header.
 To make filtering and ordering to results, all parameters should be added to end of the endpoint. You can do sorting for
  the any field in the result set. For example:
 
-`<host_name>/api/v1/debtors/?first_name=foo&last_name=bar`
+`<host_name>/api/v1/debtors/?first_name=foo&last_name=bar&ordering=email`
+
+to make ordering descending, put a minus sign:`?ordering=-pk`
 
 
 If you don't want to get paginated response, just put limit at the end of url
