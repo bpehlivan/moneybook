@@ -14,7 +14,7 @@ class LoginView(View):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user=user)
-            return redirect('home')
+            return redirect('users:home')
         else:
             return render(request, 'login/login.html',
                           {'is_authentication_failed': True})
